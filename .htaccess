@@ -1,0 +1,45 @@
+# ============================================================
+# Single Course Store - .htaccess
+# ============================================================
+
+# Security Headers
+<IfModule mod_headers.c>
+    Header set X-Frame-Options "SAMEORIGIN"
+    Header set X-XSS-Protection "1; mode=block"
+    Header set X-Content-Type-Options "nosniff"
+    Header set Referrer-Policy "strict-origin-when-cross-origin"
+</IfModule>
+
+# Disable directory listing
+Options -Indexes
+
+# PHP error handling
+<IfModule mod_php.c>
+    php_flag display_errors Off
+    php_flag log_errors On
+    php_value error_log /var/www/html/courses/logs/php_errors.log
+</IfModule>
+
+# Session security
+<IfModule mod_php.c>
+    php_flag session.cookie_httponly 1
+    php_flag session.use_only_cookies 1
+    php_value session.cookie_samesite "Strict"
+</IfModule>
+
+# Protect sensitive files
+<FilesMatch "\.(env|log|sql|ini|bak|md)$">
+    Require all denied
+</FilesMatch>
+
+# Deny access to setup.php once deployed (uncomment in production)
+# <Files "setup.php">
+#     Require all denied
+# </Files>
+
+# Protect the logs directory
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+    # Block direct access to logs
+    RewriteRule ^logs/ - [F,L]
+</IfModule>
