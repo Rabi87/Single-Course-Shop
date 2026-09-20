@@ -23,7 +23,7 @@ docker exec -i php-mysql-docker-mysql-1 mysql -u root -proot_secure_password_123
 افتح `http://localhost:8081` → import → اختر `sql/schema.sql`.
 
 ### 2) إنشاء حساب الأدمن
-افتح في المتصفح:
+افتح في المتصفح  (على docker ) :
 ```
 http://localhost:8080/courses/setup.php
 ```
